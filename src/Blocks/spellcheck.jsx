@@ -13,19 +13,11 @@ function SpellChecker() {
     useEffect(() => {
       const spell = nspell(affData, dicData);
       setSpellchecker(spell)
-    }, []);
+    },[]);
 
     const checkSpelling = () => {
         const words = inputText.split(/\s+/);
-        const misspelled = words.map((word) => {
-            if (spellchecker && !spellchecker.correct(word)) {
-                return {
-                    word,
-                    suggestions: spellchecker.suggest(word)
-                };
-            }
-            return null;
-        }).filter(Boolean);
+        const misspelled = words.filter((word) => spellchecker && !spellchecker.correct(word));
         setMisspelledWords(misspelled);
     };
 
@@ -43,15 +35,8 @@ function SpellChecker() {
                 <div className='mt-4'>
                     <h2 className='text-xl font-semibold mb-2'>Misspelled Words:</h2>
                     <ul className='list-disc pl-6'>
-                        {misspelledWords.map((item, index) => (
-                            <li key={index}>
-                                {item.word}
-                                <ul className='list-decimal pl-6'>
-                                    {item.suggestions.slice(0, 5).map((suggestion, i) => (
-                                        <li key={i}>{suggestion}</li>
-                                    ))}
-                                </ul>
-                            </li>
+                        {misspelledWords.map((word, index) => (
+                            <li key={index}>{word}</li>
                         ))}
                     </ul>
                 </div>
@@ -60,7 +45,7 @@ function SpellChecker() {
     );
 }
 
-export default function Home() {
+export default function Nome() {
   return (
     <div className='min-h-screen flex items-center justify-center'>
        <SpellChecker />
